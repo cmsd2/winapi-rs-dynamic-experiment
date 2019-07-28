@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+	"declare-macro",
+	"use-macro",
+]
