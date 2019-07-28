@@ -54,6 +54,7 @@ pub fn declare_functions(input: proc_macro::TokenStream) -> proc_macro::TokenStr
 
 			// extract call signature
 			let ident = function.ident;
+			let vis = function.vis;
 			let decl = &*function.decl;
 			let inputs = &decl.inputs;
 			let output = &decl.output;
@@ -63,7 +64,7 @@ pub fn declare_functions(input: proc_macro::TokenStream) -> proc_macro::TokenStr
 
 			// add a new static ref to the lazy_static instance below
 			dynamic_declarations.extend(quote!(
-				pub static ref #ident: Option<libloading::Symbol<'static, unsafe #abi fn (#inputs) #output>> = unsafe {
+				#vis static ref #ident: Option<libloading::Symbol<'static, unsafe #abi fn (#inputs) #output>> = unsafe {
 					#library.as_ref().and_then(|lib| lib.get(#ident_bytes).ok())
 				};
 			));
