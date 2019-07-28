@@ -56,6 +56,7 @@ pub fn declare_functions(input: proc_macro::TokenStream) -> proc_macro::TokenStr
 			let ident = function.ident;
 			let vis = function.vis;
 			let decl = &*function.decl;
+			let fn_token = &decl.fn_token;
 			let inputs = &decl.inputs;
 			let output = &decl.output;
 
@@ -64,7 +65,7 @@ pub fn declare_functions(input: proc_macro::TokenStream) -> proc_macro::TokenStr
 
 			// add a new static ref to the lazy_static instance below
 			dynamic_declarations.extend(quote!(
-				#vis static ref #ident: Option<libloading::Symbol<'static, unsafe #abi fn (#inputs) #output>> = unsafe {
+				#vis static ref #ident: Option<libloading::Symbol<'static, unsafe #abi #fn_token (#inputs) #output>> = unsafe {
 					#library.as_ref().and_then(|lib| lib.get(#ident_bytes).ok())
 				};
 			));
@@ -77,7 +78,6 @@ pub fn declare_functions(input: proc_macro::TokenStream) -> proc_macro::TokenStr
 			#![allow(non_upper_case_globals)]
 			use super::*;
 			lazy_static::lazy_static! {
-				static ref USER32: Option<libloading::Library> = { libloading::Library::new("user32.dll").ok() };
 				#dynamic_declarations
 			}
 		}
