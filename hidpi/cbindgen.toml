@@ -1,0 +1,9 @@
+language = "C++"
+namespace = "hidpi"
+tab_width = 4
+
+[export]
+item_types = ["globals", "enums", "structs", "unions", "typedefs", "opaque", "functions", "constants"]
+
+[parse]
+include = ["hidpi"]

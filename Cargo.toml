@@ -3,4 +3,8 @@
 members = [
 	"declare-macro",
 	"use-macro",
+	"hidpi",
+	"hidpi-gui",
+	"dll_plugin",
+	"dll_plugin_import",
 ]
