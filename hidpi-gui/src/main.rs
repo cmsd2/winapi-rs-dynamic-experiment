@@ -584,6 +584,7 @@ pub fn main() {
 pub extern "system" fn wWinMain(h_inst: HINSTANCE, _h_inst_2: HINSTANCE, _str: LPWSTR, n_cmd_show: INT) -> INT
 {*/
     //show_console_window();
+    hidpi::win::set_thread_dpi_awareness_context(winapi::shared::windef::DPI_AWARENESS_CONTEXT_SYSTEM_AWARE);
 
     let mut wcex = winuser::WNDCLASSEXW::default();
     let wcex_classname = to_wstring(WINDOWCLASSNAME);
